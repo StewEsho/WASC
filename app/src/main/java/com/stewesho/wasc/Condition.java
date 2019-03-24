@@ -4,7 +4,7 @@ public abstract class Condition {
 
     Weather weather;
 
-    abstract double score(double input);
+    abstract double score(Number input);
 
     Weather getWeather(){
         return this.weather;

@@ -3,16 +3,17 @@ package com.stewesho.wasc;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class Clothing {
     private String name;
     private ClothingCategory cat;
     private HashMap<Weather, Condition> conditions;
 
-    Clothing(String name, ClothingCategory cat, HashMap<Weather, Condition> conditions){
+    Clothing(String name, ClothingCategory cat){
         this.name = name;
         this.cat = cat;
-        this.conditions = new HashMap<>(conditions);
+        this.conditions = new HashMap<>();
     }
 
     public String getName(){
@@ -32,10 +33,14 @@ public class Clothing {
 
         for (Weather weather : inputs.keySet()){
             if (conditions.containsKey(weather))
-                score += conditions.get(weather).score((double) inputs.get(weather));
+                score += conditions.get(weather).score(inputs.get(weather).doubleValue());
         }
         score /= conditions.size();
         return score;
+    }
+
+    public String toString(){
+        return String.format(Locale.CANADA, "%s", this.name);
     }
 
 }

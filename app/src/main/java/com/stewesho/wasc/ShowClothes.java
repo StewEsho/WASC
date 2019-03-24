@@ -21,6 +21,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -28,11 +29,16 @@ public class ShowClothes extends AppCompatActivity {
 
     JSONObject darkskyData;
     JSONObject weather;
+    Wardrobe wardrobe;
+    ArrayList<Clothing> outfit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_clothes);
+
+        //Set up wardrobe
+        wardrobe = new Wardrobe();
 
         //Powered By Dark Sky
         Spanned powered_by;
@@ -55,24 +61,48 @@ public class ShowClothes extends AppCompatActivity {
 
         String json_string;
         Toast toast_test;
+        HashMap<Weather, Number> weatherReport = new HashMap<>();
         try{
             json_string = new GetWeatherTask().execute(lat, lng).get();
             darkskyData = new JSONObject(json_string);
 
             weather = darkskyData.getJSONObject("daily").getJSONArray("data").getJSONObject(0);
 
+            //Get weather data, and place into a weather report
+            double tempHigh = weather.getDouble("temperatureHigh");
+            double tempLow = weather.getDouble("temperatureLow");
+            double avgTemp = (tempHigh + tempLow) / 2;
 
-            toast_test = Toast.makeText(getApplicationContext(), weather.has("uvIndex") ? "yes" : "no", Toast.LENGTH_LONG);
-            toast_test.show();
+            double windspeed = weather.getDouble("windSpeed");
+
+            double precipChance = weather.getDouble("precipProbability");
+
+            int uvIndex = weather.getInt("uvIndex");
+
+            double cloudCoverage = weather.getDouble("cloudCover");
+
+            weatherReport.put(Weather.TEMPERATURE, avgTemp);
+            weatherReport.put(Weather.WINDSPEED, windspeed);
+            weatherReport.put(Weather.PRECIP_CHANCE, precipChance);
+            weatherReport.put(Weather.UV_INDEX, uvIndex);
+            weatherReport.put(Weather.CLOUD_COVERAGE, cloudCoverage);
+
         } catch (JSONException je){
             Log.e("Invalid JSON file.", je.getMessage(), je);
             Toast toast_error = Toast.makeText(getApplicationContext(), "oOoopSIE dooPSie", Toast.LENGTH_LONG);
             toast_error.show();
         } catch (Exception e){
             // . . . lol did you think i would actually handle this??!?!
+        } finally {
+
         }
+        double ace = 3;
+        outfit = wardrobe.getOutfit(weatherReport);
+        TextView responseText = findViewById(R.id.responseText);
+        responseText.setText(outfit.toString());
 
     }
+
 
     class GetWeatherTask extends AsyncTask<Double, Void, String> {
         final private String KEY = "846ce2443ae544622e0442e0f44d1f95";
