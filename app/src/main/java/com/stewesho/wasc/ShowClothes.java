@@ -75,7 +75,9 @@ public class ShowClothes extends AppCompatActivity {
 
             double windspeed = weather.getDouble("windSpeed");
 
-            double precipChance = weather.getDouble("precipProbability");
+            double precipChance = 0.0;
+            if (weather.has("precipProbability"))
+                precipChance = weather.getDouble("precipProbability");
 
             int uvIndex = weather.getInt("uvIndex");
 
@@ -115,7 +117,7 @@ public class ShowClothes extends AppCompatActivity {
         protected String doInBackground(Double... coordinates){
             Double latitude = coordinates[0];
             Double longitude = coordinates[1];
-            api_address.append(latitude.toString()).append(",").append(longitude.toString()).append("?exclude=currently,minutely,hourly,flags&units=ca");
+            api_address.append(latitude.toString()).append(",").append(longitude.toString()).append(/*",1547310000*/"?exclude=currently,minutely,hourly,flags&units=ca");
 
             try {
                 URL api_url = new URL(api_address.toString());
