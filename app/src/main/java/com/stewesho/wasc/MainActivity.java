@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
 //            Check for a new location every 5 minutes
 //            if (lastKnownLocation == null )
-                locationManager.requestLocationUpdates(locationProvider, 0, 0, locationListener);
+                locationManager.requestLocationUpdates(locationProvider, 10_000, 0, locationListener);
 //            else
 //                getForecast(lastKnownLocation);
 

@@ -203,7 +203,7 @@ public class Wardrobe {
             if (cat == ClothingCategory.OTHER){
                 for (Clothing clothing : wardrobe.get(cat)){
                     double score = clothing.score(weatherArray);
-                    if (score > 0.5){
+                    if (score > 0.25){
                         outfit.add(clothing);
                     }
                 }

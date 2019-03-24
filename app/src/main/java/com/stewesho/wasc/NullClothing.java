@@ -10,6 +10,6 @@ public class NullClothing extends Clothing {
 
     @Override
     public double score(HashMap<Weather, Number> inputs){
-        return 0.2;
+        return 0.5;
     }
 }
