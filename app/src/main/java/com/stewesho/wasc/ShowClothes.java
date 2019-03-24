@@ -94,12 +94,12 @@ public class ShowClothes extends AppCompatActivity {
         } catch (Exception e){
             // . . . lol did you think i would actually handle this??!?!
         } finally {
-
+            outfit = wardrobe.getOutfit(weatherReport);
+            TextView responseText = findViewById(R.id.responseText);
+            responseText.setText(outfit.toString());
+            TextView weatherText = findViewById(R.id.weatherText);
+            weatherText.setText(weatherReport.toString());
         }
-        double ace = 3;
-        outfit = wardrobe.getOutfit(weatherReport);
-        TextView responseText = findViewById(R.id.responseText);
-        responseText.setText(outfit.toString());
 
     }
 
