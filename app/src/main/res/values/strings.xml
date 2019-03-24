@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">WASC</string>
+    <string name="powered_by">&lt;a href=https://darksky.net/poweredby/&gt; Powered by Dark Sky &lt;/a&gt;</string>
+</resources>
